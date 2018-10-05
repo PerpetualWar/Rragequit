@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon --inspect index.js"
+  },
   "dependencies": {
+    "discord.io": "^2.5.3",
     "discord.js": "^11.3.0",
     "winston": "^2.4.0"
   }

@@ -1,19 +1,13 @@
 const Discord = require('discord.js');
-const logger = require('winston');
-const client = new Discord.Client();
-
+const commands = require('./commands');
 const config = require('./config.json');
 
-// Configure logger settings
-logger.remove(logger.transports.Console);
-logger.add(logger.transports.Console, {
-  colorize: true
-});
-logger.add(logger.transports.File, { filename: 'log.txt' });
-logger.level = 'debug';
+const client = new Discord.Client();
 
+//Bot definition
 client.on('ready', () => {
   console.log('Bot is online!');
+  console.log(client.status);
 });
 
 // Create an event listener for new guild members
@@ -27,19 +21,21 @@ client.on('guildMemberAdd', member => {
   channel.send(`Welcome to the server, ${member}`);
 });
 
+//event listener for messsages
 client.on('message', message => {
+  console.log(message);
   if (!message.content.startsWith(config.prefix)) return;
 
-  let command = message.content.split(" ")[0];
-  command = command.slice(config.prefix.length);
+  let command = message.content.split(' ')[0].slice(config.prefix.length);
+  console.log(command);
 
-  if (command === 'ping') {
-    message.reply('pong');
-  }
-
-  if (command === 'add') {
-    message.channel.send("added");
-  }
+  commands(command, message);
 });
 
+//global error handler
+process.on('unhandledRejection', error =>
+  console.error(`Uncaught Promise Rejection:\n${error}`)
+);
+
+//bot login
 client.login(config.token);
