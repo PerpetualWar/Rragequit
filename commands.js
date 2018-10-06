@@ -1,21 +1,37 @@
-const { added, setAdded, mapAdded } = require('./state');
+require('dotenv').config('./.env');
+const playersFormatter = require('./utils/formatter');
 const database = require('./database/database');
 
 module.exports = (command, message, adminAdd) => {
   const commands = {
-    add() {
-      added.push(message.author.username);
-      if (adminAdd) setAdded.add(adminAdd);
-      setAdded.add(message.author.username);
-      console.log(setAdded);
-      return message.channel.send(message.author.username + ' added');
-    },
-    remove() {},
-    who() {
-      return message.channel.send(setAdded);
-    },
     ping() {
       return message.reply('pong');
+    },
+    async add() {
+      try {
+        await database('added_players').insert({
+          discord_id: message.author.id,
+          discord_username: message.author.username,
+        });
+        return message.channel.send(message.author.username + ' added');
+      } catch (e) {
+        console.error(e);
+        return message.channel.send(
+          message.author.username + ' is already added!'
+        );
+      }
+    },
+    async remove() {
+      await database('added_players').insert({ discord_id: message.author.id });
+      return message.channel.send(message.author.username + ' added');
+    },
+    async who() {
+      const players = await database
+        .from('added_players')
+        .select('discord_username');
+
+      const formatted = playersFormatter(players);
+      return message.channel.send(formatted);
     },
   };
 
