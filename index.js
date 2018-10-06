@@ -24,12 +24,13 @@ client.on('guildMemberAdd', member => {
 //event listener for messsages
 client.on('message', message => {
   console.log(message);
+  console.log(message.member instanceof Set);
   if (!message.content.startsWith(config.prefix)) return;
 
   let command = message.content.split(' ')[0].slice(config.prefix.length);
   console.log(command);
 
-  commands(command, message);
+  commands(command, message, 'bleh');
 });
 
 //global error handler

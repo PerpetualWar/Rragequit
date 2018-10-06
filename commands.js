@@ -1,10 +1,18 @@
-module.exports = (command, message) => {
+const { added, setAdded, mapAdded } = require('./state');
+
+module.exports = (command, message, adminAdd) => {
   const commands = {
     add() {
-      return message.channel.send('added');
+      added.push(message.author.username);
+      if (adminAdd) setAdded.add(adminAdd);
+      setAdded.add(message.author.username);
+      console.log(setAdded);
+      return message.channel.send(message.author.username + ' added');
     },
     remove() {},
-    who() {},
+    who() {
+      return message.channel.send(setAdded);
+    },
     ping() {
       return message.reply('pong');
     },
