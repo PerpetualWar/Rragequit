@@ -1,6 +1,7 @@
 require('dotenv').config('./.env');
 const Discord = require('discord.js');
 const commands = require('./commands');
+const parser = require('./utils/parser');
 const config = require('./config/config');
 
 const client = new Discord.Client();
@@ -13,7 +14,6 @@ client.on('ready', () => {
 
 // Create an event listener for new guild members
 client.on('guildMemberAdd', member => {
-  console.log(member);
   // Send the message to a designated channel on a server:
   const channel = member.guild.channels.find('name', 'member-log');
   // Do nothing if the channel wasn't found on this server
@@ -22,16 +22,23 @@ client.on('guildMemberAdd', member => {
   channel.send(`Welcome to the server, ${member}`);
 });
 
-//event listener for messsages
-client.on('message', message => {
+//event listener for messages
+client.on('message', async message => {
   console.log(message);
-  console.log(message.member instanceof Set);
+
   if (!message.content.startsWith(config.prefix)) return;
 
-  let command = message.content.split(' ')[0].slice(config.prefix.length);
-  console.log(command);
+  //fetch admin role id
+  const { id: adminRoleId } = message.guild.roles.find(
+    role => role.name === 'admin'
+  );
 
-  commands(command, message, 'bleh');
+  const { command, member } = parser(message);
+
+  //check if message sender is an admin and member is truthy
+  if (message.member.roles.has(adminRoleId) && member)
+    commands(command, message, member);
+  else commands(command, message);
 });
 
 //global error handler

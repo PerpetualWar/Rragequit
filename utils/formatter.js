@@ -3,5 +3,5 @@ module.exports = players => {
   players.forEach(userObj => {
     formattedPlayers.push(userObj.discord_username);
   });
-  return formattedPlayers.join(' / ');
+  return formattedPlayers.join(' || ');
 };
