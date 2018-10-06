@@ -1,5 +1,6 @@
 {
-  "name": "discordbot",
+  "name": "ragequit",
+  "description": "Discord pickup bot",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
