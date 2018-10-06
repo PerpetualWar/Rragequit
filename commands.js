@@ -1,4 +1,5 @@
 const { added, setAdded, mapAdded } = require('./state');
+const database = require('./database/database');
 
 module.exports = (command, message, adminAdd) => {
   const commands = {

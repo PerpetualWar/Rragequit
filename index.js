@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const commands = require('./commands');
-const config = require('./config.json');
+const config = require('./config/config');
+const dotenv = require('dotenv');
+dotenv.load();
 
 const client = new Discord.Client();
 
@@ -39,4 +41,4 @@ process.on('unhandledRejection', error =>
 );
 
 //bot login
-client.login(config.token);
+client.login(process.env.BOT_TOKEN);

@@ -4,10 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --inspect index.js"
+    "start": "nodemon --inspect index.js",
+    "migrate:make": "knex migrate:make --knexfile database/knexfile.js",
+    "migrate:run": "knex migrate:latest --knexfile database/knexfile.js",
+    "migrate:rollback": "knex migrate:rollback --knexfile database/knexfile.js",
+    "migrate:status": "knex migrate:currentVersion --knexfile database/knexfile.js",
+    "seed:make": "knex seed:make --knexfile database/knexfile.js",
+    "seed:run": "knex seed:run --knexfile database/knexfile.js"
   },
   "dependencies": {
-    "discord.io": "^2.5.3",
     "discord.js": "^11.4.2",
     "dotenv": "^6.0.0",
     "knex": "^0.15.2",

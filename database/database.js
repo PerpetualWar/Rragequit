@@ -1,8 +1,7 @@
-var dotenv = require('dotenv');
-dotenv.load();
-
-var knex = require('knex')({
+const database = require('knex')({
   client: 'pg',
+  debug: true,
+  asyncStackTraces: true,
   connection: {
     host: process.env.DB_HOST,
     user: process.env.DB_USERNAME,
@@ -10,3 +9,5 @@ var knex = require('knex')({
     database: process.env.DB_NAME,
   },
 });
+
+module.exports = database;
