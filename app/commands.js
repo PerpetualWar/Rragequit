@@ -1,6 +1,6 @@
 require('dotenv').config('./.env');
-const playersFormatter = require('./utils/formatter');
-const database = require('./database/database');
+const playersFormatter = require('../utils/formatter');
+const database = require('../database/database');
 
 module.exports = (command, message, member) => {
   const commands = {
@@ -16,7 +16,8 @@ module.exports = (command, message, member) => {
           discord_id: userId,
           discord_username: userName,
         });
-        return message.channel.send(userName + ' added');
+        // return message.channel.send(userName + ' added');
+        return await this.who();
       } catch (e) {
         console.error(e);
         return message.channel.send(userName + ' is already added!');
@@ -30,7 +31,8 @@ module.exports = (command, message, member) => {
         await database('added_players')
           .where({ discord_id: userId })
           .delete();
-        return message.channel.send(userName + ' removed');
+        // return message.channel.send(userName + ' removed');
+        return await this.who();
       } catch (e) {
         console.error(e);
         return message.channel.send(userName + ' is not removed!');
