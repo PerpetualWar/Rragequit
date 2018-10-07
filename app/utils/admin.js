@@ -1,12 +1,14 @@
+const { adminRole } = require('../../config/config');
+
 exports.getAdminRoleId = message => {
   const { id: adminRoleId } = message.guild.roles.find(
-    role => role.name === 'admin'
+    role => role.name === adminRole
   );
-
   return adminRoleId;
 };
 
 exports.isUserAdmin = message => {
-  console.log(message);
-  return message.member.roles.has(getAdminRoleId(message));
+  const res = message.member.roles.some(role => role.name === adminRole);
+  console.log(res);
+  return res;
 };

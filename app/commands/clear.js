@@ -6,6 +6,7 @@ const playersFormatter = require('../utils/formatter');
 module.exports = {
   name: 'clear',
   description: 'remove all players from pickup',
+  admin: true,
   guildOnly: true,
   async execute(message, args) {
     try {

@@ -6,6 +6,7 @@ module.exports = {
   name: 'remove',
   description: 'remove players from pickup',
   aliases: ['r'],
+  adminArgs: true,
   guildOnly: true,
   cooldown: 5,
   async execute(message, args) {

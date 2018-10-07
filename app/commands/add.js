@@ -6,6 +6,7 @@ module.exports = {
   name: 'add',
   description: 'add player to pickup',
   aliases: ['a'],
+  adminArgs: true,
   guildOnly: true,
   cooldown: 5,
   async execute(message, args) {
