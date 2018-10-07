@@ -1,5 +1,5 @@
 require('dotenv').config('./.env');
-const playersFormatter = require('../utils/formatter');
+const playersFormatter = require('./utils/formatter');
 const database = require('../database/database');
 
 module.exports = (command, message, member) => {

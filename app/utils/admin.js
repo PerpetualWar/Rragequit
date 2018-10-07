@@ -7,5 +7,6 @@ exports.getAdminRoleId = message => {
 };
 
 exports.isUserAdmin = message => {
-  return message.member.roles.has(adminRoleId);
+  console.log(message);
+  return message.member.roles.has(getAdminRoleId(message));
 };

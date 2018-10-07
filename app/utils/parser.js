@@ -1,4 +1,4 @@
-const config = require('../config/config');
+const config = require('../../config/config');
 
 module.exports = ({ content, guild }, isAdmin) => {
   const command = content.split(' ')[0].slice(config.prefix.length);
