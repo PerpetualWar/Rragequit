@@ -1,5 +1,5 @@
 const database = require('../../database/database');
-const getMemberObject = require('../utils/getMemberObject');
+const getMember = require('../utils/getMemberObject');
 const { execute: who } = require('./who');
 
 module.exports = {
@@ -10,25 +10,21 @@ module.exports = {
   guildOnly: true,
   cooldown: 5,
   async execute(message, args) {
-    const { memberObject, memberName } = getMemberObject(message, args);
+    const {
+      id,
+      user: { username },
+    } = getMember(message, args);
 
-    if (memberObject) {
-      var id = memberObject.id;
-      var username = memberObject.user.username;
-    }
-
-    const userId = memberName ? id : message.author.id;
-    const userName = memberName ? username : message.author.username;
     try {
       await database('added_players').insert({
-        discord_id: userId,
-        discord_username: userName,
+        discord_id: id,
+        discord_username: username,
       });
-      // return message.channel.send(userName + ' added');
-      return await who(message);
+      const currentPlayers = await who(message);
+      console.log(currentPlayers);
     } catch (e) {
       console.error(e);
-      return message.channel.send(userName + ' is already added!');
+      return message.channel.send(username + ' is already added!');
     }
   },
 };

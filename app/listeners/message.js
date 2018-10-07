@@ -1,10 +1,12 @@
-const { prefix } = require('../../config/config');
+const { prefix, channel } = require('../../config/config');
 const cooldownLogic = require('./../utils/cooldowns');
 const guildOnly = require('../utils/guildOnly');
 const commandRunner = require('../utils/commandRunner');
 
 module.exports = (client, cooldowns) =>
   client.on('message', async message => {
+    console.log(message);
+    if (message.channel.name !== channel) return;
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     //we take out command name and possible arguments

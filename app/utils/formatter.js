@@ -1,3 +1,5 @@
+const embed = require('./embed');
+
 module.exports = players => {
   let formattedPlayers = [];
 
