@@ -5,6 +5,7 @@ const { execute: who } = require('./who');
 module.exports = {
   name: 'remove',
   description: 'remove players from pickup',
+  aliases: ['r'],
   guildOnly: true,
   cooldown: 5,
   async execute(message, args) {

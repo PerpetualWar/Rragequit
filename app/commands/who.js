@@ -4,6 +4,7 @@ const database = require('../../database/database');
 module.exports = {
   name: 'who',
   description: 'players already added to the pickup',
+  aliases: ['w'],
   guildOnly: true,
   cooldown: 5,
   async execute(message, args) {

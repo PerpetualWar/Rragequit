@@ -5,6 +5,7 @@ const { execute: who } = require('./who');
 module.exports = {
   name: 'add',
   description: 'add player to pickup',
+  aliases: ['a'],
   guildOnly: true,
   cooldown: 5,
   async execute(message, args) {
