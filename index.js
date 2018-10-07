@@ -1,44 +1,40 @@
+require('dotenv').config('./.env');
+const fs = require('fs');
 const Discord = require('discord.js');
-const commands = require('./commands');
-const config = require('./config/config');
-const dotenv = require('dotenv');
-dotenv.load();
+const ready = require('./app/listeners/ready');
+const messages = require('./app/listeners/message');
 
+//bot init
+//-------------------------------------------------------------------
 const client = new Discord.Client();
 
-//Bot definition
-client.on('ready', () => {
-  console.log('Bot is online!');
-  console.log(client.status);
+//commands collection setup
+//-------------------------------------------------------------------
+client.commands = new Discord.Collection();
+
+const commandFiles = fs
+  .readdirSync('./app/commands')
+  .filter(file => file.endsWith('.js'));
+
+commandFiles.forEach(file => {
+  const command = require(`./app/commands/${file}`);
+
+  // set a new item in the Collection
+  // with the key as the command name and the value as the exported module
+  client.commands.set(command.name, command);
 });
 
-// Create an event listener for new guild members
-client.on('guildMemberAdd', member => {
-  console.log(member);
-  // Send the message to a designated channel on a server:
-  const channel = member.guild.channels.find('name', 'member-log');
-  // Do nothing if the channel wasn't found on this server
-  if (!channel) return;
-  // Send the message, mentioning the member
-  channel.send(`Welcome to the server, ${member}`);
-});
-
-//event listener for messsages
-client.on('message', message => {
-  console.log(message);
-  console.log(message.member instanceof Set);
-  if (!message.content.startsWith(config.prefix)) return;
-
-  let command = message.content.split(' ')[0].slice(config.prefix.length);
-  console.log(command);
-
-  commands(command, message, 'bleh');
-});
+//event listeners
+//-------------------------------------------------------------------
+ready(client);
+messages(client);
 
 //global error handler
-process.on('unhandledRejection', error =>
-  console.error(`Uncaught Promise Rejection:\n${error}`)
-);
+//-------------------------------------------------------------------
+process.on('unhandledRejection', error => {
+  console.error(`Uncaught Promise Rejection:\n${error}`);
+});
 
 //bot login
+//-------------------------------------------------------------------
 client.login(process.env.BOT_TOKEN);
