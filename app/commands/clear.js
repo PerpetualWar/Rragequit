@@ -1,7 +1,6 @@
 const database = require('../../database/database');
 const playersFormatter = require('../utils/formatter');
-// const getMemberObject = require('../../utils/getMemberObject');
-// const { execute: who } = require('./who');
+const setTopic = require('../utils/topicSetter');
 
 module.exports = {
   name: 'clear',
@@ -12,6 +11,7 @@ module.exports = {
     try {
       await database('added_players').delete();
 
+      setTopic(message.client.channels);
       return message.channel.send(playersFormatter());
     } catch (e) {
       console.error(e);

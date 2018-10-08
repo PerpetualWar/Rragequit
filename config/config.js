@@ -2,5 +2,6 @@ module.exports = {
   prefix: '!',
   adminRole: 'admin',
   channel: 'capickup',
-  pickupNumber: 3,
+  pickupNumber: 10,
+  pickupName: 'qltdm',
 };

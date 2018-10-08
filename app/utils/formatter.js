@@ -1,4 +1,5 @@
-const embed = require('./embed');
+// const embed = require('./embed');
+// const getPlayers = require('../../database/queries/getAllPlayers');
 
 module.exports = players => {
   let formattedPlayers = [];

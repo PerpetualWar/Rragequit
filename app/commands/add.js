@@ -1,10 +1,10 @@
 const database = require('../../database/database');
 const getMember = require('../utils/getMemberObject');
-const { execute: who } = require('./who');
 const getPlayers = require('../../database/queries/getAllPlayers');
 const { pickupNumber } = require('../../config/config');
 const formatter = require('../utils/formatter');
 const capGenerator = require('../utils/randomCaptainGenerator');
+const setTopic = require('../utils/topicSetter');
 
 module.exports = {
   name: 'add',
@@ -37,7 +37,11 @@ module.exports = {
         `);
 
         await database('added_players').delete();
-      } else return message.channel.send(formatter(players));
+      } else {
+        console.log(message);
+        setTopic(message.client.channels);
+        message.channel.send(formatter(players));
+      }
     } catch (e) {
       console.error(e);
       return message.channel.send(username + ' is already added!');
