@@ -1,5 +1,6 @@
-const playersFormatter = require('../utils/formatter');
+const formatter = require('../utils/formatter');
 const database = require('../../database/database');
+const getPlayers = require('../../database/queries/getAllPlayers');
 
 module.exports = {
   name: 'who',
@@ -9,11 +10,8 @@ module.exports = {
   cooldown: 5,
   async execute(message, args) {
     try {
-      const players = await database
-        .from('added_players')
-        .select('discord_username');
-
-      const formatted = playersFormatter(players);
+      const players = await getPlayers();
+      const formatted = formatter(players);
       return message.channel.send(formatted);
     } catch (e) {
       console.error(e);

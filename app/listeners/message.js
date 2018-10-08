@@ -6,7 +6,10 @@ const commandRunner = require('../utils/commandRunner');
 module.exports = (client, cooldowns) =>
   client.on('message', async message => {
     console.log(message);
+    //listen only on designated channel
     if (message.channel.name !== channel) return;
+
+    //if no prefix or bot sending msg, ignore
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     //we take out command name and possible arguments
