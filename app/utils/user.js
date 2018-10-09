@@ -1,0 +1,1 @@
+exports.isGuildMember = (message, args) => {};
