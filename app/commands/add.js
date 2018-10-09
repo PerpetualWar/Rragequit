@@ -26,6 +26,7 @@ module.exports = {
       });
 
       const players = await getPlayers();
+      console.log('message :', message);
 
       //when we reach enough players, generate captains,
       //delete table entries and send message it is ready
@@ -35,6 +36,18 @@ module.exports = {
         ${capGenerator(players)},
         ${formatter(players)}
         `);
+
+        //also send DM to every player that pickup is ready
+        players.forEach(player => {
+          const currentPlayer = message.guild.members.get(player.discord_id);
+          console.log('currentPlayer :', currentPlayer);
+          currentPlayer.send(`
+          **Pickup ready:**
+          =======================
+          ${capGenerator(players)},
+          ${formatter(players)}
+          `);
+        });
 
         await database('added_players').delete();
       } else {
