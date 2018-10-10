@@ -3,7 +3,7 @@ const getMemberByArg = require('../utils/getMemberObject');
 module.exports = {
   name: 'unmute',
   description: 'mute given players at channel',
-  aliases: [],
+  aliases: ['u'],
   admin: true,
   guildOnly: false,
   async execute(message, args) {

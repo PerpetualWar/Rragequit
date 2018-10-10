@@ -9,7 +9,7 @@ module.exports = async channels => {
 
   console.log(pickupChannel);
 
-  return pickupChannel.setTopic(
+  return await pickupChannel.setTopic(
     `**${pickupName}**: ${formatter(await getPlayers())}`
   );
 };

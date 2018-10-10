@@ -1,6 +1,4 @@
-const formatter = require('../utils/formatter');
-const database = require('../../database/database');
-const getPlayers = require('../../database/queries/getAllPlayers');
+const printPlayers = require('../utils/printPlayers');
 
 module.exports = {
   name: 'who',
@@ -10,9 +8,8 @@ module.exports = {
   cooldown: 5,
   async execute(message, args) {
     try {
-      const players = await getPlayers();
-      const formatted = formatter(players);
-      return message.channel.send(formatted);
+      console.log(message);
+      await printPlayers(message.guild.channels);
     } catch (e) {
       console.error(e);
       return message.channel.send('Nobody is added yet!');
