@@ -12,9 +12,9 @@ module.exports = client =>
     const userId = newVal.id;
     const addedPlayers = await getPlayers();
 
-    //if user is offline, check if it was a player and remove it from db
-    // and set topic and channel message again to notify
-    //otherwise do nothing if he/she is not a player
+    //if user is offline, check if it was a player and remove it from db,
+    //set topic and send channel message again to notify
+    //otherwise do nothing
     if (newVal.presence.status === 'offline') {
       addedPlayers.forEach(async player => {
         if (player.discord_id === userId) {

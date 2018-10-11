@@ -1,7 +1,9 @@
 const database = require('../../database/database');
 const getMember = require('../utils/getMemberObject');
 const getPlayers = require('../../database/queries/getAllPlayers');
-const { pickupNumber } = require('../../config/config');
+const {
+  pickups: { numberOfPlayers },
+} = require('../../config/config');
 const formatter = require('../utils/formatter');
 const capGenerator = require('../utils/randomCaptainGenerator');
 const setTopic = require('../utils/topicSetter');
@@ -30,7 +32,7 @@ module.exports = {
 
       //when we reach enough players, generate captains,
       //delete table entries and send message it is ready
-      if (players.length === pickupNumber) {
+      if (players.length === numberOfPlayers) {
         message.channel.send(`
         **Pickup ready:** 
         ${capGenerator(players)},

@@ -1,7 +1,40 @@
+// module.exports = {
+//   [guildId]: {
+//     prefix: '!',
+//     adminRole: 'admin',
+//     channel: 'capickup',
+//     pickups: [
+//       {
+//         pickupName: 'qltdm',
+//         numberOfPlayers: 10,
+//       },
+//       {
+//         pickupName: 'qlctf',
+//         numberOfPlayers: 10,
+//       },
+//     ],
+//   },
+// };
+
 module.exports = {
   prefix: '!',
   adminRole: 'admin',
   channel: 'capickup',
-  pickupNumber: 10,
   pickupName: 'qltdm',
+  numberOfPlayers: 10,
+};
+module.exports = {
+  prefix: '!',
+  adminRole: 'admin',
+  channel: 'capickup',
+  pickups: [
+    {
+      pickupName: 'qltdm',
+      numberOfPlayers: 10,
+    },
+    {
+      pickupName: 'qlctf',
+      numberOfPlayers: 10,
+    },
+  ],
 };

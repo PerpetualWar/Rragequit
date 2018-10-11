@@ -2252,6 +2252,10 @@ needle@^2.2.1:
     iconv-lite "^0.4.4"
     sax "^1.2.4"
 
+node-file-parser@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/node-file-parser/-/node-file-parser-2.2.2.tgz#8909bf4b72d0079ca51ff3afb4725b480db404c0"
+
 node-int64@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
