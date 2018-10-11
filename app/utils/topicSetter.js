@@ -1,4 +1,8 @@
-const { channel: configChannel, pickupName } = require('../../config/config');
+const {
+  channel: configChannel,
+  pickupName,
+  numberOfPlayers,
+} = require('../../config/config');
 const getPlayers = require('../../database/queries/getAllPlayers');
 const formatter = require('../utils/formatter');
 
@@ -7,9 +11,11 @@ module.exports = async channels => {
     channel => channel.name === configChannel
   );
 
-  console.log(pickupChannel);
+  const players = await getPlayers();
+  const currentPlayers = players.length;
+  console.log(currentPlayers);
 
   return pickupChannel.setTopic(
-    `**${pickupName}**: ${formatter(await getPlayers())}`
+    `**${pickupName}**: [${currentPlayers}/${numberOfPlayers}]`
   );
 };
