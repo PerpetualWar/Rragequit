@@ -15,7 +15,9 @@ module.exports = async channels => {
   const currentPlayers = players.length;
   console.log(currentPlayers);
 
+
   return pickupChannel.setTopic(
     `**${pickupName}**: [${currentPlayers}/${numberOfPlayers}]`
+
   );
 };

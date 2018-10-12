@@ -13,14 +13,22 @@ module.exports = {
         user: { username },
       } = getMemberByArg(message, args);
 
-      const muteMember = message.channel.members.get(id);
-      muteMember.setMute(true, args[1]);
+      try {
+        const muteMember = message.channel.members.get(id);
+        const muteRole = message.guild.roles.find(
+          role => role.name === 'Muted'
+        );
 
-      console.log(muteMember);
+        muteMember.roles.set(muteRole);
+        console.log('muteMember :', muteMember);
+        console.log('muteRole', muteRole);
 
-      return message.channel.send(
-        `${username} is muted with reason: ${args.slice(1).join(' ')}`
-      );
+        return message.channel.send(
+          `${username} is muted with reason: ${args.slice(1).join(' ')}`
+        );
+      } catch (e) {
+        console.error(e);
+      }
     } else {
       return message.channel.send(`username must be provided`);
     }
