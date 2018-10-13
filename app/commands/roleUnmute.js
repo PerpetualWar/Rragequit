@@ -2,9 +2,9 @@ const getMember = require('../utils/getMemberObject');
 const { mutedRole } = require('../../config/config');
 
 module.exports = {
-  name: 'unmute',
-  description: 'mute given players at channel',
-  aliases: ['u'],
+  name: 'roleunmute',
+  description: 'unmute given players guild wide',
+  aliases: ['ru'],
   admin: true,
   guildOnly: false,
   async execute(message, args) {
@@ -13,13 +13,13 @@ module.exports = {
         id,
         user: { username },
       } = getMember(message, args);
-
       const unmuteMember = message.channel.members.get(id);
       console.log('unmuteMember :', unmuteMember);
-
-      message.channel.overwritePermissions(unmuteMember, {
-        SEND_MESSAGES: null,
-      });
+      const muteRole = message.guild.roles.find(
+        role => role.name === mutedRole
+      );
+      console.log('muteRole :', muteRole);
+      await unmuteMember.removeRole(muteRole);
 
       return message.channel.send(`${username} is unmuted!`);
     } else {

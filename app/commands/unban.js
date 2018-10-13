@@ -3,9 +3,9 @@ const { mutedRole, channel: configChannel } = require('../../config/config');
 const timedUserAction = require('../utils/timedUserAction');
 
 module.exports = {
-  name: 'mute',
-  description: 'mute given players at channel',
-  aliases: ['m'],
+  name: 'unban',
+  description: 'unban given player at channel',
+  aliases: ['ub'],
   admin: true,
   guildOnly: false,
   async execute(message, args) {
@@ -18,17 +18,19 @@ module.exports = {
       // const member = guild.member(user) || (await guild.fetchMember(user));
 
       try {
-        const muteMember = message.channel.members.get(id);
+        const bannedMember =
+          message.channel.members.get(id) ||
+          (await message.guild.fetchMember(id));
 
-        message.channel.overwritePermissions(muteMember, {
-          SEND_MESSAGES: false,
+        message.channel.overwritePermissions(bannedMember, {
+          VIEW_CHANNEL: null,
         });
 
-        console.log('muteMember :', muteMember);
+        console.log('bannedMember :', bannedMember);
 
-        return message.channel.send(
-          `${username} is muted with a reason: ${args.slice(1).join(' ')}`
-        );
+        bannedMember.user.send(`You have been unbanned`);
+
+        return message.channel.send(`${username} is unbanned`);
       } catch (e) {
         console.error(e);
       }

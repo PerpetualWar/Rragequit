@@ -3,9 +3,9 @@ const { mutedRole, channel: configChannel } = require('../../config/config');
 const timedUserAction = require('../utils/timedUserAction');
 
 module.exports = {
-  name: 'mute',
-  description: 'mute given players at channel',
-  aliases: ['m'],
+  name: 'rolemute',
+  description: 'mute players guild wide',
+  aliases: ['rm'],
   admin: true,
   guildOnly: false,
   async execute(message, args) {
@@ -19,11 +19,13 @@ module.exports = {
 
       try {
         const muteMember = message.channel.members.get(id);
+        const muteRole = message.guild.roles.find(
+          role => role.name === mutedRole
+        );
 
-        message.channel.overwritePermissions(muteMember, {
-          SEND_MESSAGES: false,
-        });
-
+        console.log('muteRole', muteRole);
+        console.log('muteMember :', muteMember);
+        await muteMember.addRole(muteRole);
         console.log('muteMember :', muteMember);
 
         return message.channel.send(
@@ -33,7 +35,7 @@ module.exports = {
         console.error(e);
       }
     } else {
-      return message.author.send(`username and TTL must be provided`);
+      return message.author.send(`username must be provided`);
     }
   },
 };
