@@ -4,7 +4,7 @@ const { mutedRole } = require('../../config/config');
 module.exports = {
   name: 'roleunmute',
   description: 'unmute given players guild wide',
-  aliases: ['ru'],
+  aliases: ['rum'],
   admin: true,
   guildOnly: false,
   async execute(message, args) {

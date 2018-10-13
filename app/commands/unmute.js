@@ -4,7 +4,7 @@ const { mutedRole } = require('../../config/config');
 module.exports = {
   name: 'unmute',
   description: 'mute given players at channel',
-  aliases: ['u'],
+  aliases: ['um'],
   admin: true,
   guildOnly: false,
   async execute(message, args) {
