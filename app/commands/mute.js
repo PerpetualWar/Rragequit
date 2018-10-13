@@ -1,4 +1,6 @@
-const getMemberByArg = require('../utils/getMemberObject');
+const getMember = require('../utils/getMemberObject');
+const { mutedRole } = require('../../config/config');
+const timedUserAction = require('../utils/timedUserAction');
 
 module.exports = {
   name: 'mute',
@@ -7,21 +9,22 @@ module.exports = {
   admin: true,
   guildOnly: false,
   async execute(message, args) {
-    if (args.length > 0) {
+    if (args.length > 1) {
       const {
         id,
         user: { username },
-      } = getMemberByArg(message, args);
+      } = getMember(message, args);
 
       try {
         const muteMember = message.channel.members.get(id);
         const muteRole = message.guild.roles.find(
-          role => role.name === 'Muted'
+          role => role.name === mutedRole
         );
 
-        muteMember.roles.set(muteRole);
-        console.log('muteMember :', muteMember);
         console.log('muteRole', muteRole);
+        console.log('muteMember :', muteMember);
+        await muteMember.addRole(muteRole);
+        console.log('muteMember :', muteMember);
 
         return message.channel.send(
           `${username} is muted with reason: ${args.slice(1).join(' ')}`

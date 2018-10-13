@@ -6,7 +6,7 @@ const printPlayers = require('../utils/printPlayers');
 module.exports = client =>
   client.on('presenceUpdate', async (oldVal, newVal) => {
     console.log('oldVal :', oldVal);
-    console.log('newVal :', newVal.guild.channels);
+    console.log('newVal :', newVal);
 
     //get all players and get id of players
     const userId = newVal.id;
