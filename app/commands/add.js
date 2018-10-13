@@ -1,9 +1,9 @@
 const database = require('../../database/database');
 const getMember = require('../utils/getMemberObject');
 const getPlayers = require('../../database/queries/getAllPlayers');
-const {
-  pickups: { numberOfPlayers },
-} = require('../../config/config');
+// const {
+//   pickups: { numberOfPlayers },
+// } = require('../../config/config');
 const formatter = require('../utils/formatter');
 const capGenerator = require('../utils/randomCaptainGenerator');
 const setTopic = require('../utils/topicSetter');

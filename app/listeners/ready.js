@@ -13,5 +13,5 @@ module.exports = client =>
     //   guild_name: name,
     // });
 
-    setTopic(client.channels);
+    // setTopic(client.channels);
   });
