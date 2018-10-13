@@ -1,8 +1,8 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('game_modes', table => {
     table.increments();
-    table.string('gamemode_id').unique();
     table.string('gamemode_name');
+    table.integer('number_of_players').unsigned();
     table
       .integer('channel_id')
       .unsigned()
