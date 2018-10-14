@@ -3,8 +3,10 @@ const database = require('../database');
 module.exports = async guild => {
   return await database('guilds')
     .insert({
-      guild_id: guild.id,
-      guild_name: guild.name,
+      id: guild.id,
+      name: guild.name,
+      prefix: '!',
+      admin_role: 'admin',
     })
-    .returning('guild_id');
+    .returning('id');
 };

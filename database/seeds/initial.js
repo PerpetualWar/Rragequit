@@ -6,6 +6,8 @@ exports.seed = async function(knex, Promise) {
     knex('guilds').insert({
       id: '150610549829271552',
       name: '#capickup',
+      prefix: '!',
+      admin_role: 'admin',
     }),
 
     await knex('channels').del(),

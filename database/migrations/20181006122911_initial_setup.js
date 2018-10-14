@@ -6,6 +6,8 @@ exports.up = function(knex, Promise) {
         .unique()
         .primary();
       table.string('name');
+      table.string('prefix');
+      table.string('admin_role');
       table.timestamps();
     }),
     knex.schema.createTable('channels', table => {

@@ -1,13 +1,18 @@
 const { prefix, channel } = require('../../config/config');
 const cooldownLogic = require('./../utils/cooldowns');
 const guildOnly = require('../utils/guildOnly');
+const dmOnly = require('../utils/dmOnly');
 const commandRunner = require('../utils/commandRunner');
+const getChannels = require('../../database/queries/getChannels');
 
 module.exports = (client, cooldowns) =>
   client.on('message', async message => {
     console.log(message);
-    //listen only on designated channel
-    if (message.channel.name !== channel) return;
+    //**THIS NEEDS FIXIGN
+    //FOR MULTIPEL CHANNELS PER GUILD**
+    client.guilds.get();
+    // const res = await getChannels(message.guild.id);
+    // console.log('res :', res);
 
     //if no prefix or bot sending msg, ignore
     if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -25,12 +30,19 @@ module.exports = (client, cooldowns) =>
 
     if (!command) return;
 
-    //guildonly sanity check
+    //sanity checks
     guildOnly(command, message);
+    dmOnly(command, message);
 
     //spam prevention
     const inEffect = cooldownLogic(command, message);
     if (inEffect) return;
+
+    if (command.name === 'config') return commandRunner(command, message, args);
+
+    //listen only on designated channels or dms
+    if (message.channel.type !== 'dm' || message.channel.name !== channel)
+      return;
 
     //here we finally run commands
     commandRunner(command, message, args);

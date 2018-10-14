@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const ready = require('./app/listeners/ready');
 const messages = require('./app/listeners/message');
 const presenceUpdate = require('./app/listeners/presenceUpdate');
+const guildCreate = require('./app/listeners/guildCreate');
 
 //bot init
 //-------------------------------------------------------------------
@@ -30,6 +31,7 @@ commandFiles.forEach(file => {
 ready(client);
 messages(client);
 presenceUpdate(client);
+guildCreate(client);
 
 //global error handler
 //-------------------------------------------------------------------
