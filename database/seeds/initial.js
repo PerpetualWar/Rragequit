@@ -25,6 +25,12 @@ exports.seed = async function(knex, Promise) {
       name: 'capickup',
       guild_id: '150610549829271552',
     }),
+    await knex('gametypes').del(), // Inserts seed entries
+    knex('gametypes').insert({
+      name: 'qltdm',
+      number_of_players: 8,
+      channel_id: '150610797117046784',
+    }),
     await knex('players').del(), // Inserts seed entries
     knex('players').insert({
       id: '103562232985571328',

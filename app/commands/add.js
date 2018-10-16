@@ -1,9 +1,7 @@
 const database = require('../../database/database');
 const getMember = require('../utils/getMemberObject');
 const getPlayers = require('../../database/queries/getAllPlayers');
-// const {
-//   pickups: { numberOfPlayers },
-// } = require('../../config/config');
+const { numberOfPlayers } = require('../../config/config');
 const formatter = require('../utils/formatter');
 const capGenerator = require('../utils/randomCaptainGenerator');
 const setTopic = require('../utils/topicSetter');
@@ -21,14 +19,31 @@ module.exports = {
       user: { username },
     } = getMember(message, args);
 
+    const guildId = message.guild.id;
+    const channelId = message.channel.id;
+    const gametypeName = args[0];
+    console.log(gametypeName);
+
     try {
-      await database('added_players').insert({
-        discord_id: id,
-        discord_username: username,
+      const [{ id: gametypeId }] = await database('gametypes')
+        .where({
+          name: gametypeName,
+          channel_id: channelId,
+        })
+        .select('id');
+      console.log(gametypeId);
+
+      await database('matches').insert({
+        match_id: 1,
+        user_id: id,
+        guild_id: guildId,
+        channel_id: channelId,
+        gametype_id: gametypeId,
       });
 
-      const players = await getPlayers();
+      const players = await getPlayers(1);
       console.log('message :', message);
+      console.log(players);
 
       //when we reach enough players, generate captains,
       //delete table entries and send message it is ready
@@ -51,7 +66,7 @@ module.exports = {
           `);
         });
 
-        await database('added_players').delete();
+        // await database('added_players').delete();
       } else {
         console.log(message);
         setTopic(message.client.channels);

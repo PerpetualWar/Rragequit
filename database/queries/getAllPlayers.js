@@ -1,7 +1,10 @@
 const database = require('../database');
 
-module.exports = async () => {
+module.exports = async matchId => {
   return await database
-    .from('added_players')
-    .select('discord_username', 'discord_id');
+    .select('user_id')
+    .from('matches')
+    .where({
+      match_id: matchId,
+    });
 };

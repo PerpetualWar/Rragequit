@@ -52,6 +52,7 @@ exports.up = function(knex, Promise) {
     }),
     knex.schema.createTable('matches', table => {
       table.increments();
+      table.integer('match_id');
       table
         .string('user_id')
         .references('id')
@@ -73,6 +74,7 @@ exports.up = function(knex, Promise) {
         .inTable('gametypes')
         .onDelete('cascade');
       table.timestamps();
+      table.unique(['user_id', 'channel_id', 'guild_id', 'gametype_id']);
     }),
   ]);
 };

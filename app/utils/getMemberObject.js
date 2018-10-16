@@ -1,6 +1,6 @@
 module.exports = (message, args) => {
   //we expose member object either by args username or by author username
-  const memberName = args[0] || null;
+  const memberName = args[1] || null;
 
   let member;
 
