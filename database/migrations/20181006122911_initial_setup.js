@@ -24,7 +24,10 @@ exports.up = function(knex, Promise) {
       table.timestamps();
     }),
     knex.schema.createTable('gametypes', table => {
-      table.increments('id').primary();
+      table
+        .increments('id')
+        .unique()
+        .primary();
       table.string('name');
       table.integer('number_of_players');
       table
@@ -33,6 +36,7 @@ exports.up = function(knex, Promise) {
         .inTable('channels')
         .onDelete('cascade');
       table.timestamps();
+      table.unique(['name', 'channel_id']);
     }),
     knex.schema.createTable('players', table => {
       table

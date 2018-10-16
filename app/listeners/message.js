@@ -38,11 +38,14 @@ module.exports = (client, cooldowns) =>
     const inEffect = cooldownLogic(command, message);
     if (inEffect) return;
 
+    //cfg allowed to be used in DM, without being in specific channel first
+    //(so we can configure channel first and other stuff like gametype)
     if (command.name === 'config') return commandRunner(command, message, args);
 
     //listen only on designated channels or dms
-    if (message.channel.type !== 'dm' || message.channel.name !== channel)
+    if (message.channel.type !== 'dm' && message.channel.name !== channel)
       return;
+    console.log('here');
 
     //here we finally run commands
     commandRunner(command, message, args);

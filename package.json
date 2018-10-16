@@ -11,7 +11,8 @@
     "migrate:rollback": "knex migrate:rollback --knexfile database/knexfile.js",
     "migrate:status": "knex migrate:currentVersion --knexfile database/knexfile.js",
     "seed:make": "knex seed:make --knexfile database/knexfile.js",
-    "seed:run": "knex seed:run --knexfile database/knexfile.js"
+    "seed:run": "knex seed:run --knexfile database/knexfile.js",
+    "test": "jest"
   },
   "dependencies": {
     "discord.js": "^11.4.2",

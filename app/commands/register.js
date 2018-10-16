@@ -1,11 +1,13 @@
 const database = require('../../database/database');
 const getMember = require('../utils/getMemberObject');
+const insert = require('../../database/queries/insert');
 
 module.exports = {
   name: 'register',
   description: 'register player to with bot',
-  aliases: [],
+  aliases: ['reg'],
   adminArgs: false,
+  admin: false,
   guildOnly: true,
   cooldown: 5,
   async execute(message, args) {
@@ -14,47 +16,20 @@ module.exports = {
       user: { username },
     } = getMember(message, args);
 
+    console.log(id, username);
+
     try {
-      await Promise.all([
-        database('guilds').insert({
-          guild_id: id,
-          discord_username: username,
-        }),
-      ]);
+      await database('players')
+        .insert({
+          id,
+          username,
+        })
+        .returning('id');
 
-      // const players = await getPlayers();
-      // console.log('message :', message);
-
-      // //when we reach enough players, generate captains,
-      // //delete table entries and send message it is ready
-      // if (players.length === numberOfPlayers) {
-      //   message.channel.send(`
-      //   **Pickup ready:**
-      //   ${capGenerator(players)},
-      //   ${formatter(players)}
-      //   `);
-
-      //   //also send DM to every player that pickup is ready
-      //   players.forEach(player => {
-      //     const currentPlayer = message.guild.members.get(player.discord_id);
-      //     console.log('currentPlayer :', currentPlayer);
-      //     currentPlayer.send(`
-      //     **Pickup ready:**
-      //     =======================
-      //     ${capGenerator(players)},
-      //     ${formatter(players)}
-      //     `);
-      //   });
-
-      //   await database('added_players').delete();
-      // } else {
-      //   console.log(message);
-      //   setTopic(message.client.channels);
-      //   message.channel.send(formatter(players));
-      // }
+      message.channel.send(`${username} is now registered!`);
     } catch (e) {
       console.error(e);
-      return message.channel.send(username + ' is already added!');
+      return message.channel.send(username + ' is already registered!');
     }
   },
 };
